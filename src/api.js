@@ -27,20 +27,20 @@ export const createNewInvoice = () => {
   window.location.reload();
 };
 
-export const editInvoiceById = async (id, data) => {
+export const editInvoiceById = async (id, updatedInvoice) => {
   try {
-    const response = await fetch(`${API_URL}/${id}`, {
-      method: 'PUT',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data),
+    const response = await fetch(`https://in3.dev/inv/${id}`, {
+      method: "PUT", // Ensure it's a PUT request if you're updating
+      body: JSON.stringify(updatedInvoice),
+      headers: {
+        "Content-Type": "application/json",
+      },
     });
-
-    // Log the response for debugging
-    const responseData = await handleResponse(response);
-    console.log('Response data:', responseData); // Debugging line
-    return responseData;
+    if (!response.ok) throw new Error("Failed to update invoice");
+    return await response.json();
   } catch (error) {
-    console.error('Error editing invoice:', error);
+    console.error("Error updating invoice:", error);
+    throw error;
   }
 };
 

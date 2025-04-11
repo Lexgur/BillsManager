@@ -93,20 +93,22 @@ const Invoice = () => {
   const handleEditInvoice = async (id) => {
     const invoiceToEdit = allInvoices.find((inv) => inv.id === id);
     if (!invoiceToEdit) return alert("Sąskaita nerasta.");
-
+  
     // Make the necessary updates to the invoice
     const updatedInvoice = {
       ...invoiceToEdit,
       note: "Redaguota rankiniu būdu",
     }; // example update
-
+  
     try {
       await editInvoiceById(id, updatedInvoice);
       alert("Sąskaita atnaujinta.");
-      // Reload the invoices after edit
-      loadInvoices()
-        .then((invoices) => setAllInvoices(invoices))
-        .catch(console.error);
+      // Update the state with the edited invoice
+      setAllInvoices((prevInvoices) =>
+        prevInvoices.map((inv) =>
+          inv.id === id ? { ...inv, ...updatedInvoice } : inv
+        )
+      );
     } catch (error) {
       console.error("Klaida redaguojant sąskaitą:", error);
       alert("Nepavyko atnaujinti sąskaitos.");

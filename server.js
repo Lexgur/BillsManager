@@ -27,43 +27,6 @@ const initializeDb = async () => {
 };
 
 // CRUD Endpoints
-app.post('/:collection', async (req, res) => {
-  const { collection } = req.params;
-  const id = uuidv4();
-  const db = JSON.parse(await fs.readFile(DATA_FILE));
-  db[collection] = db[collection] || [];
-  db[collection].push({ ...req.body, id });
-  await fs.writeFile(DATA_FILE, JSON.stringify(db, null, 2));
-  res.json({ id });
-});
-
-app.get('/:collection', async (req, res) => {
-  const db = JSON.parse(await fs.readFile(DATA_FILE));
-  res.json(db[req.params.collection] || []);
-});
-
-app.put('/:collection/:id', async (req, res) => {
-  const { collection, id } = req.params;
-  const db = JSON.parse(await fs.readFile(DATA_FILE));
-  if (db[collection]) {
-    db[collection] = db[collection].map(item => 
-      item.id === id ? { ...item, ...req.body } : item
-    );
-    await fs.writeFile(DATA_FILE, JSON.stringify(db, null, 2));
-  }
-  res.json({ success: true });
-});
-
-app.delete('/:collection/:id', async (req, res) => {
-  const { collection, id } = req.params;
-  const db = JSON.parse(await fs.readFile(DATA_FILE));
-  if (db[collection]) {
-    db[collection] = db[collection].filter(item => item.id !== id);
-    await fs.writeFile(DATA_FILE, JSON.stringify(db, null, 2));
-  }
-  res.json({ success: true });
-});
-
 app.post('/invoices', async (req, res) => {
   const newInvoice = req.body;
   const db = JSON.parse(await fs.readFile(DATA_FILE));
@@ -81,6 +44,27 @@ app.get('/invoices', async (req, res) => {
   } catch (error) {
     res.status(500).json({ message: error.message });
   }
+});
+
+app.put('/invoices/:id', async (req, res) => {
+  const { id } = req.params.id;
+  const db = JSON.parse(await fs.readFile(DATA_FILE));
+  const index = db.invoices.findIndex(item => item.id === id);
+  if (index !== -1) {
+    db.invoices[index] = { ...db.invoices[index], ...req.body };
+    await fs.writeFile(DATA_FILE, JSON.stringify(db, null, 2));
+    res.json({ success: true });
+  } else {
+    res.status(404).json({ message: 'Invoice not found' });
+  }
+});
+
+app.delete('/invoices/:id', async (req, res) => {
+  const { id } = req.params.id;
+  const db = JSON.parse(await fs.readFile(DATA_FILE));
+  db.invoices = db.invoices.filter(item => item.id !== id);
+  await fs.writeFile(DATA_FILE, JSON.stringify(db, null, 2));
+  res.json({ success: true });
 });
 
 // Start server
