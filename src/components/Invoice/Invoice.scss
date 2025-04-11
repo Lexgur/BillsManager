@@ -127,4 +127,75 @@ $tnr: 'Times New Roman', serif;
       }
     }
   }
+  
+  .btn {
+    font-family: $tnr;
+    font-size: 14px;
+    padding: 8px 16px;
+    border: 1px solid $sil;
+    border-radius: 2px;
+    background-color: $white;
+    color: $black;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: center;
+    display: inline-block;
+    margin: 4px 2px;
+    
+    &:hover {
+      background-color: darken($white, 5%);
+      border-color: $gray;
+    }
+    
+    &:active {
+      transform: translateY(1px);
+    }
+    
+    &:disabled {
+      opacity: 0.6;
+      cursor: not-allowed;
+    }
+  }
+  
+  .btn-blue {
+    background-color: #2a5c8d;
+    color: $white;
+    border-color: #1a4a7a;
+    
+    &:hover {
+      background-color: darken(#2a5c8d, 10%);
+    }
+  }
+  
+  .btn-red {
+    background-color: #c23b22;
+    color: $white;
+    border-color: #a22b12;
+    
+    &:hover {
+      background-color: darken(#c23b22, 10%);
+    }
+  }
+  
+  .btn-green {
+    background-color: #3a7d44;
+    color: $white;
+    border-color: #2a6d34;
+    
+    &:hover {
+      background-color: darken(#3a7d44, 10%);
+    }
+  }
+  
+
+  .invoice-btn {
+    @extend .btn;
+    font-size: 13px;
+    padding: 6px 12px;
+    background-color: lighten($sil, 15%);
+    
+    &:hover {
+      background-color: lighten($sil, 10%);
+    }
+  }
 }

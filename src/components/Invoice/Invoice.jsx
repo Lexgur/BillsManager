@@ -122,8 +122,8 @@ const Invoice = () => {
           <p className="total-total">Galutinė suma: {finalSum.toFixed(2)} €</p>
         </div>
       </div>
-      <button>Išsaugoti sąskaitą</button>
-      <button>Peržiūrėti visas sąskaitas</button>
+      <button className='btn btn-green'>Išsaugoti sąskaitą</button>
+      <button className='btn btn-blue'>Peržiūrėti visas sąskaitas</button>
     </div>
   );
 };
