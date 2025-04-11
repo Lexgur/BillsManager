@@ -1,6 +1,12 @@
-import './Invoice.scss';
-import React, { useEffect, useState } from 'react';
-import { saveInvoice, loadInvoices, createNewInvoice, editInvoiceById, deleteInvoiceById } from '../../api';
+import "./Invoice.scss";
+import React, { useEffect, useState } from "react";
+import {
+  saveInvoice,
+  loadInvoices,
+  createNewInvoice,
+  editInvoiceById,
+  deleteInvoiceById,
+} from "../../api";
 
 const Invoice = () => {
   const [invoice, setInvoice] = useState(null);
@@ -14,8 +20,8 @@ const Invoice = () => {
     const fetchInvoice = async () => {
       try {
         setLoading(true);
-        const response = await fetch('https://in3.dev/inv/');
-        if (!response.ok) throw new Error('Failed to fetch invoice');
+        const response = await fetch("https://in3.dev/inv/");
+        if (!response.ok) throw new Error("Failed to fetch invoice");
         const data = await response.json();
         setInvoice(data);
         setTotalDiscount(calculateTotalDiscount(data.items));
@@ -31,7 +37,7 @@ const Invoice = () => {
 
   useEffect(() => {
     loadInvoices()
-      .then(invoices => setAllInvoices(invoices))
+      .then((invoices) => setAllInvoices(invoices))
       .catch(console.error);
   }, []);
 
@@ -39,9 +45,9 @@ const Invoice = () => {
     return items.reduce((total, item) => {
       let discountAmount = 0;
       if (item.discount) {
-        if (item.discount.type === 'fixed') {
+        if (item.discount.type === "fixed") {
           discountAmount = item.discount.value;
-        } else if (item.discount.type === 'percentage') {
+        } else if (item.discount.type === "percentage") {
           discountAmount = (item.price * item.discount.value) / 100;
         }
       }
@@ -59,8 +65,10 @@ const Invoice = () => {
 
   const renderCompany = (company, type) => (
     <div className={`company company-${type}`}>
-      <h2>{type === 'seller' ? 'Pardavėjas' : 'Pirkėjas'}</h2>
-      <p><strong>{company.name}</strong></p>
+      <h2>{type === "seller" ? "Pardavėjas" : "Pirkėjas"}</h2>
+      <p>
+        <strong>{company.name}</strong>
+      </p>
       <p>{company.address}</p>
       <p>Įmonės kodas: {company.code}</p>
       <p>PVM kodas: {company.vat}</p>
@@ -73,7 +81,7 @@ const Invoice = () => {
     try {
       setLoading(true);
       await saveInvoice(invoice); // Save the invoice
-      alert('Sąskaita sėkmingai išsaugota!');
+      alert("Sąskaita sėkmingai išsaugota!");
       handleViewAll(); // Reload all invoices after saving
     } catch (err) {
       alert(`Nepavyko išsaugoti sąskaitos: ${err.message}`);
@@ -83,31 +91,36 @@ const Invoice = () => {
   };
 
   const handleEditInvoice = async (id) => {
-    const invoiceToEdit = allInvoices.find(inv => inv.id === id);
-    if (!invoiceToEdit) return alert('Sąskaita nerasta.');
+    const invoiceToEdit = allInvoices.find((inv) => inv.id === id);
+    if (!invoiceToEdit) return alert("Sąskaita nerasta.");
 
     // Make the necessary updates to the invoice
-    const updatedInvoice = { ...invoiceToEdit, note: 'Redaguota rankiniu būdu' }; // example update
+    const updatedInvoice = {
+      ...invoiceToEdit,
+      note: "Redaguota rankiniu būdu",
+    }; // example update
 
     try {
       await editInvoiceById(id, updatedInvoice);
-      alert('Sąskaita atnaujinta.');
+      alert("Sąskaita atnaujinta.");
       // Reload the invoices after edit
       loadInvoices()
-        .then(invoices => setAllInvoices(invoices))
+        .then((invoices) => setAllInvoices(invoices))
         .catch(console.error);
     } catch (error) {
-      console.error('Klaida redaguojant sąskaitą:', error);
-      alert('Nepavyko atnaujinti sąskaitos.');
+      console.error("Klaida redaguojant sąskaitą:", error);
+      alert("Nepavyko atnaujinti sąskaitos.");
     }
   };
 
   const handleDeleteInvoice = async (id) => {
-    if (!window.confirm('Ar tikrai norite ištrinti šią sąskaitą?')) return;
+    if (!window.confirm("Ar tikrai norite ištrinti šią sąskaitą?")) return;
 
     await deleteInvoiceById(id); // Delete the invoice by ID
-    setAllInvoices(prevInvoices => prevInvoices.filter(inv => inv.id !== id));
-    alert('Sąskaita ištrinta.');
+    setAllInvoices((prevInvoices) =>
+      prevInvoices.filter((inv) => inv.id !== id)
+    );
+    alert("Sąskaita ištrinta.");
     handleViewAll(); // Reload or update the list of invoices
   };
 
@@ -147,7 +160,7 @@ const Invoice = () => {
                     <th>Data</th>
                     <th>Pirkėjas</th>
                     <th>Suma</th>
-                    <th>Veiksmai</th> {/* <-- NEW */}
+                    <th>Veiksmai</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -158,11 +171,20 @@ const Invoice = () => {
                       <td>{inv.company.buyer.name}</td>
                       <td>
                         {(
-                          inv.items.reduce((sum, item) => sum + item.price * item.quantity, 0) -
+                          inv.items.reduce(
+                            (sum, item) => sum + item.price * item.quantity,
+                            0
+                          ) -
                           calculateTotalDiscount(inv.items) +
-                          getPvmValue(inv.items.reduce((sum, item) => sum + item.price * item.quantity, 0)) +
+                          getPvmValue(
+                            inv.items.reduce(
+                              (sum, item) => sum + item.price * item.quantity,
+                              0
+                            )
+                          ) +
                           inv.shippingPrice
-                        ).toFixed(2)} €
+                        ).toFixed(2)}{" "}
+                        €
                       </td>
                       <td>
                         <button
@@ -174,7 +196,7 @@ const Invoice = () => {
                         <button
                           className="btn btn-red"
                           onClick={() => handleDeleteInvoice(inv.id)}
-                          style={{ marginLeft: '0.5rem' }}
+                          style={{ marginLeft: "0.5rem" }}
                         >
                           Ištrinti
                         </button>
@@ -193,7 +215,10 @@ const Invoice = () => {
   }
 
   // Calculate totals only after invoice is loaded
-  const totalQuantity = invoice.items.reduce((acc, item) => acc + item.quantity, 0);
+  const totalQuantity = invoice.items.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
   const withoutPvm = getWithoutPvm(invoice.items);
   const pvm = getPvmValue(withoutPvm);
   const finalSum = withoutPvm - totalDiscount + pvm + invoice.shippingPrice;
@@ -214,11 +239,13 @@ const Invoice = () => {
         </div>
 
         <div className="companies-container">
-          {renderCompany(invoice.company.seller, 'seller')}
-          {renderCompany(invoice.company.buyer, 'buyer')}
+          {renderCompany(invoice.company.seller, "seller")}
+          {renderCompany(invoice.company.buyer, "buyer")}
         </div>
 
-        <p className="shipping">Transportavimo kaina: {invoice.shippingPrice} €</p>
+        <p className="shipping">
+          Transportavimo kaina: {invoice.shippingPrice} €
+        </p>
 
         <h2 className="items-header">Prekės</h2>
         <table className="items">
@@ -235,11 +262,11 @@ const Invoice = () => {
             {invoice.items
               .sort((a, b) => a.price - b.price)
               .map((item, index) => {
-                let discountLabel = 'Be nuolaidų';
+                let discountLabel = "Be nuolaidų";
                 if (item.discount) {
-                  if (item.discount.type === 'fixed') {
+                  if (item.discount.type === "fixed") {
                     discountLabel = `- ${item.discount.value}€`;
-                  } else if (item.discount.type === 'percentage') {
+                  } else if (item.discount.type === "percentage") {
                     discountLabel = `- ${item.discount.value}%`;
                   }
                 }
@@ -266,10 +293,18 @@ const Invoice = () => {
         </div>
 
         <div className="invoice-actions">
-          <button className="btn btn-green" onClick={handleSave} disabled={loading}>
-            {loading ? 'Išsaugoma...' : 'Išsaugoti sąskaitą'}
+          <button
+            className="btn btn-green"
+            onClick={handleSave}
+            disabled={loading}
+          >
+            {loading ? "Išsaugoma..." : "Išsaugoti sąskaitą"}
           </button>
-          <button className="btn btn-blue" onClick={handleViewAll} disabled={loading}>
+          <button
+            className="btn btn-blue"
+            onClick={handleViewAll}
+            disabled={loading}
+          >
             Peržiūrėti visas sąskaitas
           </button>
           <button className="btn btn-red" onClick={createNewInvoice}>
