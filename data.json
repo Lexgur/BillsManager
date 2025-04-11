@@ -1,0 +1,92 @@
+{
+  "invoices": [
+    {
+      "number": "AB-22389755",
+      "date": "2025-04-10",
+      "due_date": "2025-04-17",
+      "company": {
+        "buyer": {
+          "name": "IĮ Jankauskas",
+          "address": "Žalgirio g. 91, Alytus LT-05459",
+          "code": "15332788",
+          "vat": "LT122940701",
+          "phone": "869923111",
+          "email": "petrauskas.eidminas@aida.net"
+        },
+        "seller": {
+          "name": "VŠĮ \"Urbonas\"",
+          "address": "Žalgirio prospektas 44, Alytus LT-65679",
+          "code": "27628668",
+          "vat": "LT391619410",
+          "phone": "+370 46 20 42 08",
+          "email": "danute07@hotmail.com"
+        }
+      },
+      "items": [
+        {
+          "description": "Baro kėdė \"Malvina\" chromuota",
+          "quantity": 6,
+          "price": 75,
+          "discount": []
+        },
+        {
+          "description": "Pufas \"Kengūra\"",
+          "quantity": 8,
+          "price": 90.97,
+          "discount": []
+        },
+        {
+          "description": "Virtuvinis stalas paprastas mėlynas",
+          "quantity": 8,
+          "price": 90.99,
+          "discount": []
+        },
+        {
+          "description": "Rašomasis stalas \"Mokinukas\"",
+          "quantity": 6,
+          "price": 120.99,
+          "discount": []
+        },
+        {
+          "description": "Paveikslo rėmas 100X150",
+          "quantity": 5,
+          "price": 135,
+          "discount": []
+        },
+        {
+          "description": "Sudedama lova \"Studentas-mikro\"",
+          "quantity": 6,
+          "price": 150,
+          "discount": []
+        },
+        {
+          "description": "Stalas \"Violeta\" apvalus",
+          "quantity": 1,
+          "price": 210.99,
+          "discount": []
+        },
+        {
+          "description": "Rašomasis stalas \"Studentas\" su stiklo plokšte ir lakuotu stalviršium",
+          "quantity": 2,
+          "price": 270,
+          "discount": []
+        },
+        {
+          "description": "Didelė lova \"Dramblys\"",
+          "quantity": 2,
+          "price": 540,
+          "discount": []
+        },
+        {
+          "description": "6 durų spinta \"Afrikos drambliai\" su stiklo durimis",
+          "quantity": 3,
+          "price": 660,
+          "discount": []
+        }
+      ],
+      "shippingPrice": 11.99,
+      "id": "482d25e8-f75d-4de0-afc3-493fa933fb8d",
+      "note": "Redaguota rankiniu būdu"
+    }
+  ]
+}

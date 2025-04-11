@@ -186,6 +186,16 @@ $tnr: 'Times New Roman', serif;
       background-color: darken(#3a7d44, 10%);
     }
   }
+
+  .btn-yellow {
+    background-color: #ffd700;
+    color: $white;
+    border-color: #776a1d;
+    
+    &:hover {
+      background-color: darken(#ffd700, 10%);
+    }
+  }
   
 
   .invoice-btn {
