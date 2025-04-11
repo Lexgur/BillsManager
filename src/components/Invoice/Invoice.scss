@@ -1,0 +1,130 @@
+$xl: 1200px;
+$m: 864px;
+$s: 576px;
+
+$black: #000000;
+$gray: #808080;
+$sil: #C0C0C0;
+$white: white;
+
+$tnr: 'Times New Roman', serif;
+
+* {
+  box-sizing: border-box;
+}
+
+.screen {
+  font-family: $tnr;
+  margin: 0;
+  padding: 20px;
+  background-color: $white;
+  color: $black;
+
+  .saskaita-app {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: $xl;
+    margin: 0 auto;
+
+    header {
+      height: 85px;
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      .top {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 0 20px;
+
+        .title {
+          font-size: 24px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+      }
+    }
+
+    .invoice-header {
+      margin-bottom: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+      
+      .sask-number {
+        font-weight: bold;
+        margin: 0;
+      }
+      
+      .sask-data {
+        margin: 0;
+      }
+      
+      .info {
+        margin: 0;
+        font-size: 13px;
+      }
+    }
+
+    .companies-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      gap: 20px;
+
+      .company {
+        width: 45%;
+        font-size: 14px;
+        
+        &-seller {
+          text-align: left;
+        }
+        
+        &-buyer {
+          text-align: right;
+        }
+      }
+    }
+
+    .shipping {
+      margin: 20px 0;
+    }
+
+    .items-header {
+      margin-bottom: 10px;
+    }
+
+    .items {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 30px;
+      
+      td, th {
+        border: 1px solid $sil;
+        text-align: left;
+        padding: 8px;
+      }
+      
+      th {
+        background-color: lighten($sil, 15%);
+      }
+    }
+
+    .data-total {
+      margin-left: auto;
+      width: 300px;
+      text-align: right;
+      
+      .total-total {
+        font-weight: bold;
+        font-size: 18px;
+        margin-top: 10px;
+      }
+    }
+  }
+}
